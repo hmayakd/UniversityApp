@@ -1,7 +1,7 @@
 ﻿using System;
 using UniversityApp.Models;
 
-namespace UniversityConsoleApp.Models
+namespace UniversityApp.Models
 {
     public class Student : ModelBase
     {
@@ -14,5 +14,6 @@ namespace UniversityConsoleApp.Models
 
         }
         public Teacher _teacher;
+        public Group _group;
     }
 }

@@ -8,7 +8,6 @@ namespace UniversityApp.Models
         {
 
         }
-
         public ModelBase(string firstName, string lastName, int age)
         {
             _id = Guid.NewGuid();
@@ -16,7 +15,6 @@ namespace UniversityApp.Models
             _lastName = lastName;
             _age = age;
         }
-
         public Guid _id;
         public string _firstName;
         public string _lastName;

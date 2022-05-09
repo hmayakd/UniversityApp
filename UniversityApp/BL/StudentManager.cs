@@ -1,6 +1,7 @@
 ﻿using System;
-using UniversityConsoleApp.Models;
-namespace UniversityConsoleApp.BL
+using UniversityApp.Models;
+
+namespace UniversityApp.BL
 {
     public static class StudentManager
     {
@@ -26,6 +27,11 @@ namespace UniversityConsoleApp.BL
                 Console.WriteLine($"id: {student._teacher._id} name: {student._teacher._firstName} lastName: {student._teacher._lastName} age: {student._teacher._age}");
             else
                 Console.WriteLine("-------------------------------------------------------------------");
+            Console.WriteLine($"**********{student._id} -Group**********");
+            if (student._group != null)
+                Console.WriteLine($"id: {student._group._id} name: {student._group._name}");
+            else
+                Console.WriteLine("-------------------------------------------------------------------");
             Console.WriteLine();
         }
         public static void Print(Student[] students)
@@ -37,6 +43,11 @@ namespace UniversityConsoleApp.BL
                 Console.WriteLine($"**********{students[i]._id} -Teacher**********");
                 if (students[i]._teacher != null)
                     Console.WriteLine($"id: {students[i]._teacher._id} name: {students[i]._teacher._firstName} lastName: {students[i]._teacher._lastName} age: {students[i]._teacher._age}");
+                else
+                    Console.WriteLine("-------------------------------------------------------------------");
+                Console.WriteLine($"**********{students[i]._id} -Group**********");
+                if (students[i]._group != null)
+                    Console.WriteLine($"id: {students[i]._group._id} name: {students[i]._group._name}");
                 else
                     Console.WriteLine("-------------------------------------------------------------------");
             }

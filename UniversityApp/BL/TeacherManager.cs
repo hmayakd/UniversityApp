@@ -1,6 +1,7 @@
 ﻿using System;
-using UniversityConsoleApp.Models;
-namespace UniversityConsoleApp.BL
+using UniversityApp.Models;
+
+namespace UniversityApp.BL
 {
     public static class TeacherManager
     {
@@ -21,20 +22,34 @@ namespace UniversityConsoleApp.BL
         {
             Console.WriteLine("**********Teacher**********");
             Console.WriteLine($"id: {teacher._id} name: {teacher._firstName} lastName: {teacher._lastName} age: {teacher._age}");
+            Console.WriteLine($"**********{teacher._id} -Students**********");
             int stdCount = 0;
             if (teacher._students != null)
                 stdCount = teacher._students.Length;
             else
             {
-                Console.WriteLine($"**********{teacher._id} -Student**********");
                 Console.WriteLine("-------------------------------------------------------------------");
             }
             for (int i = 0; i < stdCount; i++)
             {
-                Console.WriteLine($"**********{teacher._id} -Student**********");
                 if (teacher._students != null)
                     Console.WriteLine($"id: {teacher._students[i]._id} name: {teacher._students[i]._firstName} lastName: {teacher._students[i]._lastName} " +
                         $"age:{teacher._students[i]._age}");
+                else
+                    Console.WriteLine("-------------------------------------------------------------------");
+            }
+            Console.WriteLine($"**********{teacher._id} -Groups**********");
+            int grCount = 0;
+            if (teacher._groups != null)
+                grCount = teacher._groups.Length;
+            else
+            {
+                Console.WriteLine("-------------------------------------------------------------------");
+            }
+            for (int i = 0; i < grCount; i++)
+            {
+                if (teacher._groups != null)
+                    Console.WriteLine($"id: {teacher._groups[i]._id} name: {teacher._groups[i]._name}");
                 else
                     Console.WriteLine("-------------------------------------------------------------------");
             }
@@ -46,24 +61,37 @@ namespace UniversityConsoleApp.BL
             for (int i = 0; i < teachers.Length; i++)
             {                
                 Console.WriteLine($"id: {teachers[i]._id} name: {teachers[i]._firstName} lastName: {teachers[i]._lastName} age: {teachers[i]._age}");
+                Console.WriteLine($"**********{teachers[i]._id} -Students**********");
                 int stdCount = 0;
                 if (teachers[i]._students != null)
                     stdCount = teachers[i]._students.Length;
                 else
                 {
-                    Console.WriteLine($"**********{teachers[i]._id} -Student**********");
                     Console.WriteLine("-------------------------------------------------------------------");
                 }
                 for (int j = 0; j < stdCount; j++)
                 {
-                    Console.WriteLine($"**********{teachers[i]._id} -Student**********");
                     if (teachers[i]._students != null)
                         Console.WriteLine($"id: {teachers[i]._students[j]._id} name: {teachers[i]._students[j]._firstName} lastName: {teachers[i]._students[j]._lastName} " +
                             $"age: {teachers[i]._students[j]._age}");
                     else
                         Console.WriteLine("-------------------------------------------------------------------");
                 }
-                Console.WriteLine();
+                Console.WriteLine($"**********{teachers[i]._id} -Groups**********");
+                int grCount = 0;
+                if (teachers[i]._groups != null)
+                    grCount = teachers[i]._groups.Length;
+                else
+                {
+                    Console.WriteLine("-------------------------------------------------------------------");
+                }
+                for (int j = 0; j < grCount; j++)
+                {
+                    if (teachers[i]._groups != null)
+                        Console.WriteLine($"id: {teachers[i]._groups[j]._id} name: {teachers[i]._groups[j]._name}");
+                    else
+                        Console.WriteLine("-------------------------------------------------------------------");
+                }
             }
             Console.WriteLine();
         }
