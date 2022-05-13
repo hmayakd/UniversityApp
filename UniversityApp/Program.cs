@@ -8,33 +8,33 @@ namespace UniversityApp
         static void Main(string[] args)
         {
             Student student = StudentManager.Create("John", "Doe", 19);
-            StudentManager.Print(student);
-            Student[] students = StudentManager.Create(14, 18);
-            StudentManager.Print(students);
-            Teacher teacher = TeacherManager.Create("Albert", "Einstein", 21);
-            TeacherManager.Print(teacher);
-            Teacher[] teachers = TeacherManager.Create(3, 19);
-            TeacherManager.Print(teachers);
-            Group group = GroupManager.Create("Math");
-            GroupManager.Print(group);
-            Group[] groups = GroupManager.Create(7);
-            GroupManager.Print(groups);
+            Student[] students = StudentManager.Create(5, 16);
+            Teacher teacher = TeacherManager.Create("Albert", "Einstein", 26);
+            Teacher[] teachers = TeacherManager.Create(3, 26);
+            Group group = new Group() { Name = "Group1" };
 
             Student swappedStd = new Student();
             swappedStd = UniversityManager.SwapWithTeacher(student, teacher);
-            swappedStd = UniversityManager.SwapWithGroup(student, group);
-            StudentManager.Print(swappedStd);
+            swappedStd = UniversityManager.SwapWithGroup(swappedStd, group);
+            //StudentManager.Print(student);
+            //StudentManager.Print(swappedStd);
+
             Student[] swappedStds = new Student[students.Length];
             swappedStds = UniversityManager.SwapWithTeacher(students, teacher);
-            swappedStds = UniversityManager.SwapWithGroup(students, group);
-            StudentManager.Print(swappedStds);
+            swappedStds = UniversityManager.SwapWithGroup(swappedStds, group);
+            //StudentManager.Print(students);
+            //StudentManager.Print(swappedStds);
+
             Teacher swappedTch = new Teacher();
             swappedTch = UniversityManager.SwapWithStudents(teacher, students);
-            swappedTch = UniversityManager.SwapWithGroups(teacher, groups);
-            TeacherManager.Print(swappedTch);
+            swappedTch = UniversityManager.SwapWithGroup(swappedTch, group);
+            //TeacherManager.Print(teacher);
+            //TeacherManager.Print(swappedTch);
+
             Teacher[] swappedTchs = new Teacher[teachers.Length];
             swappedTchs = UniversityManager.SwapWithStudents(teachers, students);
-            swappedTchs = UniversityManager.SwapWithGroups(teachers, groups);
+            swappedTchs = UniversityManager.SwapWithGroups(teachers, group);
+            TeacherManager.Print(teachers);
             TeacherManager.Print(swappedTchs);
         }
     }

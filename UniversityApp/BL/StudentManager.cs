@@ -7,29 +7,94 @@ namespace UniversityApp.BL
     {
         const short maxAge = 139;
         public static Student Create(string firstName, string lastName, int age)
-            => new Student(firstName, lastName, age);
+        {
+            Student student = new Student()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Age = age,
+            };
+            return student;
+        }
         public static Student[] Create(int count, int minAge)
         {
             Student[] students = new Student[count];
             Random rnd = new Random();
             for (int i = 0; i < students.Length; i++)
             {
-                students[i] = new Student($"stName{i}", $"stSurName{i}", rnd.Next(minAge, maxAge));
+                students[i] = new Student()
+                {
+                    FirstName = $"StFName{i}",
+                    LastName = $"StLName{i}",
+                    Age = rnd.Next(minAge, maxAge),
+                };
             }
             return students;
+        }
+        public static Student CopyValue(Student student)
+        {
+            if (student != null)
+            {
+                Student studentCopy = new Student()
+                {
+                    Id = student.Id,
+                    LastName = student.LastName,
+                    FirstName = student.FirstName,
+                    Age = student.Age,
+                    Group = CopyValue(student.Group),
+                };
+                return studentCopy;
+            }
+            else
+                return null;
+
+        }
+        public static Group CopyValue(Group group)
+        {
+            if (group != null)
+            {
+                Group groupCopy = new Group()
+                {
+                    Id = group.Id,
+                    Name = group.Name,
+                };
+                return groupCopy;
+            }
+            else return null;
+        }
+        public static Student[] CopyValue(Student[] students)
+        {
+            if (students != null)
+            {
+                Student[] studentsCopy = new Student[students.Length];
+                for (int i = 0; i < studentsCopy.Length; i++)
+                {
+                    Student studentCopy = new Student()
+                    {
+                        Id = students[i].Id,
+                        LastName = students[i].LastName,
+                        FirstName = students[i].FirstName,
+                        Age = students[i].Age,
+                        Group = CopyValue(students[i].Group),
+                    };
+                }
+                return studentsCopy;
+            }
+            else
+                return null;
         }
         public static void Print(Student student)
         {
             Console.WriteLine("**********Student**********");
-            Console.WriteLine($"id: {student._id} name: {student._firstName} lastName: {student._lastName} age: {student._age}");
-            Console.WriteLine($"**********{student._id} -Teacher**********");
-            if (student._teacher != null)
-                Console.WriteLine($"id: {student._teacher._id} name: {student._teacher._firstName} lastName: {student._teacher._lastName} age: {student._teacher._age}");
+            Console.WriteLine($"id: {student.Id} name: {student.FirstName} lastName: {student.LastName} age: {student.Age}");
+            Console.WriteLine($"**********{student.Id} -Teacher**********");
+            if (student.Teacher != null)
+                Console.WriteLine($"id: {student.Teacher.Id} name: {student.Teacher.FirstName} lastName: {student.Teacher.LastName} age: {student.Teacher.Age}");
             else
                 Console.WriteLine("-------------------------------------------------------------------");
-            Console.WriteLine($"**********{student._id} -Group**********");
-            if (student._group != null)
-                Console.WriteLine($"id: {student._group._id} name: {student._group._name}");
+            Console.WriteLine($"**********{student.Id} -Group**********");
+            if (student.Group != null)
+                Console.WriteLine($"id: {student.Group.Id} name: {student.Group.Name}");
             else
                 Console.WriteLine("-------------------------------------------------------------------");
             Console.WriteLine();
@@ -38,16 +103,17 @@ namespace UniversityApp.BL
         {
             Console.WriteLine("**********Students**********");
             for (int i = 0; i < students.Length; i++)
-            {                
-                Console.WriteLine($"id: {students[i]._id} name: {students[i]._firstName} lastName: {students[i]._lastName} age: {students[i]._age}");
-                Console.WriteLine($"**********{students[i]._id} -Teacher**********");
-                if (students[i]._teacher != null)
-                    Console.WriteLine($"id: {students[i]._teacher._id} name: {students[i]._teacher._firstName} lastName: {students[i]._teacher._lastName} age: {students[i]._teacher._age}");
+            {
+                Console.WriteLine($"id: {students[i].Id} name: {students[i].FirstName} lastName: {students[i].LastName} age: {students[i].Age}");
+                Console.WriteLine($"**********{students[i].Id} -Teacher**********");
+                if (students[i].Teacher != null)
+                    Console.WriteLine($"id: {students[i].Teacher.Id} name: {students[i].Teacher.FirstName} lastName: {students[i].Teacher.LastName} " +
+                        $"age: {students[i].Teacher.Age}");
                 else
                     Console.WriteLine("-------------------------------------------------------------------");
-                Console.WriteLine($"**********{students[i]._id} -Group**********");
-                if (students[i]._group != null)
-                    Console.WriteLine($"id: {students[i]._group._id} name: {students[i]._group._name}");
+                Console.WriteLine($"**********{students[i].Id} -Group**********");
+                if (students[i].Group != null)
+                    Console.WriteLine($"id: {students[i].Group.Id} name: {students[i].Group.Name}");
                 else
                     Console.WriteLine("-------------------------------------------------------------------");
             }

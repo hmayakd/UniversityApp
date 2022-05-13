@@ -1,19 +1,14 @@
 ﻿using System;
-using UniversityApp.Models;
 
 namespace UniversityApp.Models
 {
-    public class Student : ModelBase
+    public class Student : BaseModel
     {
-        public Student() : base()
-        {
-
-        }
-        public Student(string firstName, string lastName, int age) : base(firstName, lastName, age)
-        {
-
-        }
-        public Teacher _teacher;
-        public Group _group;
+        int age;
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Age { get => age; set => age = value < 15 ? throw new Exception("Student can not be younger then 15 years old!") : age = value; }
+        public Teacher Teacher { get; set; }
+        public Group Group { get; set; }
     }
 }
