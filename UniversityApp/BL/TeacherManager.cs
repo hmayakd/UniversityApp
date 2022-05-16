@@ -3,10 +3,10 @@ using UniversityApp.Models;
 
 namespace UniversityApp.BL
 {
-    public static class TeacherManager
+    public class TeacherManager : BaseManager
     {
         const short maxAge = 139;
-        public static Teacher Create(string firstName, string lastName, int age)
+        public override Person Create(string firstName, string lastName, int age)
         {
             Teacher teacher = new Teacher()
             {
@@ -16,7 +16,7 @@ namespace UniversityApp.BL
             };
             return teacher;
         }
-        public static Teacher[] Create(int count, int minAge)
+        public override Person[] Create(int count, int minAge)
         {
             Teacher[] teachers = new Teacher[count];
             Random rnd = new Random();
@@ -31,8 +31,9 @@ namespace UniversityApp.BL
             }
             return teachers;
         }
-        public static Teacher CopyValue(Teacher teacher)
+        public Teacher CopyValue(Teacher teacher)
         {
+            StudentManager studentManager = new StudentManager();
             if (teacher != null)
             {
                 Teacher teacherCopy = new Teacher()
@@ -41,16 +42,17 @@ namespace UniversityApp.BL
                     FirstName = teacher.FirstName,
                     LastName = teacher.LastName,
                     Age = teacher.Age,
-                    Group = StudentManager.CopyValue(teacher.Group),
-                    Students = StudentManager.CopyValue(teacher.Students),
+                    Group = studentManager.CopyValue(teacher.Group),
+                    Students = studentManager.CopyValue(teacher.Students),
                 };
                 return teacherCopy;
             }
             else
                 return null;
         }
-        public static Teacher[] CopyValue(Teacher[] teachers)
+        public Teacher[] CopyValue(Teacher[] teachers)
         {
+            StudentManager studentManager = new StudentManager();
             if (teachers != null)
             {
                 Teacher[] teachersCopy = new Teacher[teachers.Length];
@@ -62,8 +64,8 @@ namespace UniversityApp.BL
                         FirstName = teachers[i].FirstName,
                         LastName = teachers[i].LastName,
                         Age = teachers[i].Age,
-                        Group = StudentManager.CopyValue(teachers[i].Group),
-                        Students = StudentManager.CopyValue(teachers[i].Students),
+                        Group = studentManager.CopyValue(teachers[i].Group),
+                        Students = studentManager.CopyValue(teachers[i].Students),
                     };
                 }
                 return teachersCopy;
@@ -71,7 +73,7 @@ namespace UniversityApp.BL
             else
                 return null;
         }
-        public static void Print(Teacher teacher)
+        public void Print(Teacher teacher)
         {
             Console.WriteLine("**********Teacher**********");
             Console.WriteLine($"id: {teacher.Id} name: {teacher.FirstName} lastName: {teacher.LastName} age: {teacher.Age}");
@@ -98,7 +100,7 @@ namespace UniversityApp.BL
                 Console.WriteLine("-------------------------------------------------------------------");
             Console.WriteLine();
         }
-        public static void Print(Teacher[] teachers)
+        public void Print(Teacher[] teachers)
         {
             Console.WriteLine("**********Teachers**********");
             for (int i = 0; i < teachers.Length; i++)

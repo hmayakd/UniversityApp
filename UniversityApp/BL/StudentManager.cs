@@ -1,12 +1,13 @@
 ﻿using System;
+using UniversityApp.Interfaces;
 using UniversityApp.Models;
 
 namespace UniversityApp.BL
 {
-    public static class StudentManager
+    public class StudentManager : BaseManager
     {
         const short maxAge = 139;
-        public static Student Create(string firstName, string lastName, int age)
+        public override Person Create(string firstName, string lastName, int age)
         {
             Student student = new Student()
             {
@@ -16,7 +17,7 @@ namespace UniversityApp.BL
             };
             return student;
         }
-        public static Student[] Create(int count, int minAge)
+        public override Person[] Create(int count, int minAge)
         {
             Student[] students = new Student[count];
             Random rnd = new Random();
@@ -31,7 +32,7 @@ namespace UniversityApp.BL
             }
             return students;
         }
-        public static Student CopyValue(Student student)
+        public Student CopyValue(Student student)
         {
             if (student != null)
             {
@@ -47,9 +48,8 @@ namespace UniversityApp.BL
             }
             else
                 return null;
-
         }
-        public static Group CopyValue(Group group)
+        public Group CopyValue(Group group)
         {
             if (group != null)
             {
@@ -62,7 +62,7 @@ namespace UniversityApp.BL
             }
             else return null;
         }
-        public static Student[] CopyValue(Student[] students)
+        public Student[] CopyValue(Student[] students)
         {
             if (students != null)
             {
@@ -83,7 +83,7 @@ namespace UniversityApp.BL
             else
                 return null;
         }
-        public static void Print(Student student)
+        public void Print(Student student)
         {
             Console.WriteLine("**********Student**********");
             Console.WriteLine($"id: {student.Id} name: {student.FirstName} lastName: {student.LastName} age: {student.Age}");
@@ -99,7 +99,7 @@ namespace UniversityApp.BL
                 Console.WriteLine("-------------------------------------------------------------------");
             Console.WriteLine();
         }
-        public static void Print(Student[] students)
+        public void Print(Student[] students)
         {
             Console.WriteLine("**********Students**********");
             for (int i = 0; i < students.Length; i++)
