@@ -1,12 +1,13 @@
 ﻿using System;
+using UniversityApp.Interfaces;
 using UniversityApp.Models;
 
 namespace UniversityApp.BL
 {
-    public class TeacherManager : BaseManager
+    public class TeacherManager : ICreate, IPrint
     {
         const short maxAge = 139;
-        public override Person Create(string firstName, string lastName, int age)
+        public Person Create(string firstName, string lastName, int age)
         {
             Teacher teacher = new Teacher()
             {
@@ -16,7 +17,7 @@ namespace UniversityApp.BL
             };
             return teacher;
         }
-        public override Person[] Create(int count, int minAge)
+        public Person[] Create(int count, int minAge)
         {
             Teacher[] teachers = new Teacher[count];
             Random rnd = new Random();
@@ -73,8 +74,10 @@ namespace UniversityApp.BL
             else
                 return null;
         }
-        public void Print(Teacher teacher)
+        public void Print(Person person)
         {
+            Teacher teacher = new Teacher();
+            teacher = (Teacher)person;
             Console.WriteLine("**********Teacher**********");
             Console.WriteLine($"id: {teacher.Id} name: {teacher.FirstName} lastName: {teacher.LastName} age: {teacher.Age}");
             Console.WriteLine($"**********{teacher.Id} -Students**********");
@@ -100,8 +103,10 @@ namespace UniversityApp.BL
                 Console.WriteLine("-------------------------------------------------------------------");
             Console.WriteLine();
         }
-        public void Print(Teacher[] teachers)
+        public void Print(Person[] persons)
         {
+            Teacher[] teachers = new Teacher[persons.Length];
+            teachers = (Teacher[])persons;
             Console.WriteLine("**********Teachers**********");
             for (int i = 0; i < teachers.Length; i++)
             {

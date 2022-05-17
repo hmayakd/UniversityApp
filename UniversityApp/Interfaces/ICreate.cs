@@ -5,15 +5,8 @@ namespace UniversityApp.Interfaces
 {
     public interface ICreate
     {
-        public Person Create(string firstName, string lastName, int age)
-        {
-            Person person = new Person()
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Age = age,
-            };
-            return person;
-        }
+        const short maxAge = 139;
+        Person Create(string firstName, string lastName, int age);
+        Person[] Create(int count, int minAge);
     }
 }

@@ -4,10 +4,10 @@ using UniversityApp.Models;
 
 namespace UniversityApp.BL
 {
-    public class StudentManager : BaseManager
+    public class StudentManager : ICreate, IPrint
     {
         const short maxAge = 139;
-        public override Person Create(string firstName, string lastName, int age)
+        public Person Create(string firstName, string lastName, int age)
         {
             Student student = new Student()
             {
@@ -17,7 +17,7 @@ namespace UniversityApp.BL
             };
             return student;
         }
-        public override Person[] Create(int count, int minAge)
+        public Person[] Create(int count, int minAge)
         {
             Student[] students = new Student[count];
             Random rnd = new Random();
@@ -83,8 +83,10 @@ namespace UniversityApp.BL
             else
                 return null;
         }
-        public void Print(Student student)
+        public void Print(Person person)
         {
+            Student student = new Student();
+            student = (Student)person;
             Console.WriteLine("**********Student**********");
             Console.WriteLine($"id: {student.Id} name: {student.FirstName} lastName: {student.LastName} age: {student.Age}");
             Console.WriteLine($"**********{student.Id} -Teacher**********");
@@ -99,8 +101,10 @@ namespace UniversityApp.BL
                 Console.WriteLine("-------------------------------------------------------------------");
             Console.WriteLine();
         }
-        public void Print(Student[] students)
+        public void Print(Person[] persons)
         {
+            Student[] students = new Student[persons.Length];
+            students = (Student[])persons;
             Console.WriteLine("**********Students**********");
             for (int i = 0; i < students.Length; i++)
             {
