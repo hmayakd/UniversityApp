@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UniversityApp.Interfaces;
 using UniversityApp.Models;
 
@@ -17,20 +18,20 @@ namespace UniversityApp.BL
             };
             return teacher;
         }
-        public Person[] Create(int count, int minAge)
+        public List<Person> Create(int count, int minAge)
         {
-            Teacher[] teachers = new Teacher[count];
+            List<Person> persons = new List<Person>(count);
             Random rnd = new Random();
-            for (int i = 0; i < teachers.Length; i++)
+            for (int i = 0; i < count; i++)
             {
-                teachers[i] = new Teacher()
+                persons.Add((Person)new Teacher()
                 {
                     FirstName = $"TchFName{i}",
                     LastName = $"TchLName{i}",
                     Age = rnd.Next(minAge, maxAge),
-                };
+                });
             }
-            return teachers;
+            return persons;
         }
         public Teacher CopyValue(Teacher teacher)
         {
@@ -51,13 +52,13 @@ namespace UniversityApp.BL
             else
                 return null;
         }
-        public Teacher[] CopyValue(Teacher[] teachers)
+        public List<Teacher> CopyValue(List<Teacher> teachers)
         {
             StudentManager studentManager = new StudentManager();
             if (teachers != null)
             {
-                Teacher[] teachersCopy = new Teacher[teachers.Length];
-                for (int i = 0; i < teachersCopy.Length; i++)
+                List<Teacher> teachersCopy = new List<Teacher>(teachers.Count);
+                for (int i = 0; i < teachersCopy.Count; i++)
                 {
                     teachersCopy[i] = new Teacher()
                     {
@@ -74,6 +75,30 @@ namespace UniversityApp.BL
             else
                 return null;
         }
+        public List<Teacher> PersonToTch(List<Person> persons)
+        {
+            if (persons != null)
+            {
+                List<Teacher> teachers = new List<Teacher>(persons.Count);
+                for (int i = 0; i < persons.Count; i++)
+                    teachers.Add((Teacher)persons[i]);
+                return teachers;
+            }
+            else
+                return null;
+        }
+        public List<Person> TeacherToPrs(List<Teacher> teachers)
+        {
+            if (teachers != null)
+            {
+                List<Person> persons = new List<Person>(teachers.Count);
+                for (int i = 0; i < teachers.Count; i++)
+                    persons.Add((Person)teachers[i]);
+                return persons;
+            }
+            else
+                return null;
+        }
         public void Print(Person person)
         {
             Teacher teacher = new Teacher();
@@ -83,7 +108,7 @@ namespace UniversityApp.BL
             Console.WriteLine($"**********{teacher.Id} -Students**********");
             int stdCount = 0;
             if (teacher.Students != null)
-                stdCount = teacher.Students.Length;
+                stdCount = teacher.Students.Count;
             else
             {
                 Console.WriteLine("-------------------------------------------------------------------");
@@ -103,18 +128,18 @@ namespace UniversityApp.BL
                 Console.WriteLine("-------------------------------------------------------------------");
             Console.WriteLine();
         }
-        public void Print(Person[] persons)
+        public void Print(List<Person> persons)
         {
-            Teacher[] teachers = new Teacher[persons.Length];
-            teachers = (Teacher[])persons;
+            List<Teacher> teachers = new List<Teacher>(persons.Count);
             Console.WriteLine("**********Teachers**********");
-            for (int i = 0; i < teachers.Length; i++)
+            for (int i = 0; i < persons.Count; i++)
             {
+                teachers.Add((Teacher)persons[i]);
                 Console.WriteLine($"id: {teachers[i].Id} name: {teachers[i].FirstName} lastName: {teachers[i].LastName} age: {teachers[i].Age}");
                 Console.WriteLine($"**********{teachers[i].Id} -Students**********");
                 int stdCount = 0;
                 if (teachers[i].Students != null)
-                    stdCount = teachers[i].Students.Length;
+                    stdCount = teachers[i].Students.Count;
                 else
                 {
                     Console.WriteLine("-------------------------------------------------------------------");

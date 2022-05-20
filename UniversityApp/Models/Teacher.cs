@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace UniversityApp.Models
 {
     public class Teacher : Person
-    {        
-        public Student[] Students { get; set; }
+    {
+        public List<Student> Students { get; set; }
         public Group Group { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UniversityApp.Interfaces;
 using UniversityApp.Models;
 
@@ -17,20 +18,20 @@ namespace UniversityApp.BL
             };
             return student;
         }
-        public Person[] Create(int count, int minAge)
+        public List<Person> Create(int count, int minAge)
         {
-            Student[] students = new Student[count];
+            List<Person> persons = new List<Person>(count);
             Random rnd = new Random();
-            for (int i = 0; i < students.Length; i++)
+            for (int i = 0; i < count; i++)
             {
-                students[i] = new Student()
+                persons.Add((Person)new Student()
                 {
                     FirstName = $"StFName{i}",
                     LastName = $"StLName{i}",
                     Age = rnd.Next(minAge, maxAge),
-                };
+                });
             }
-            return students;
+            return persons;
         }
         public Student CopyValue(Student student)
         {
@@ -62,14 +63,14 @@ namespace UniversityApp.BL
             }
             else return null;
         }
-        public Student[] CopyValue(Student[] students)
+        public List<Student> CopyValue(List<Student> students)
         {
             if (students != null)
             {
-                Student[] studentsCopy = new Student[students.Length];
-                for (int i = 0; i < studentsCopy.Length; i++)
+                List<Student> studentsCopy = new List<Student>(students.Count);
+                for (int i = 0; i < studentsCopy.Count; i++)
                 {
-                    Student studentCopy = new Student()
+                    studentsCopy[i] = new Student()
                     {
                         Id = students[i].Id,
                         LastName = students[i].LastName,
@@ -79,6 +80,30 @@ namespace UniversityApp.BL
                     };
                 }
                 return studentsCopy;
+            }
+            else
+                return null;
+        }
+        public List<Student> PersonToStd(List<Person> persons)
+        {
+            if (persons != null)
+            {
+                List<Student> students = new List<Student>(persons.Count);
+                for (int i = 0; i < persons.Count; i++)
+                    students.Add((Student)persons[i]);
+                return students;
+            }
+            else
+                return null;
+        }
+        public List<Person> StudentsToPrs(List<Student> students)
+        {
+            if (students != null)
+            {
+                List<Person> persons = new List<Person>(students.Count);
+                for (int i = 0; i < students.Count; i++)
+                    persons.Add((Person)students[i]);
+                return persons;
             }
             else
                 return null;
@@ -101,12 +126,15 @@ namespace UniversityApp.BL
                 Console.WriteLine("-------------------------------------------------------------------");
             Console.WriteLine();
         }
-        public void Print(Person[] persons)
+        public void Print(List<Person> persons)
         {
-            Student[] students = new Student[persons.Length];
-            students = (Student[])persons;
+            List<Student> students = new List<Student>(persons.Count);
+            for (int i = 0; i < persons.Count; i++)
+            {
+                students.Add((Student)persons[i]);
+            };
             Console.WriteLine("**********Students**********");
-            for (int i = 0; i < students.Length; i++)
+            for (int i = 0; i < students.Count; i++)
             {
                 Console.WriteLine($"id: {students[i].Id} name: {students[i].FirstName} lastName: {students[i].LastName} age: {students[i].Age}");
                 Console.WriteLine($"**********{students[i].Id} -Teacher**********");

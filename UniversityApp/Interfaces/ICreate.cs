@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UniversityApp.Models;
 
 namespace UniversityApp.Interfaces
@@ -7,6 +8,6 @@ namespace UniversityApp.Interfaces
     {
         const short maxAge = 139;
         Person Create(string firstName, string lastName, int age);
-        Person[] Create(int count, int minAge);
+        List<Person> Create(int count, int minAge);
     }
 }

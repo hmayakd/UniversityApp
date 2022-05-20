@@ -1,5 +1,6 @@
 ﻿using System;
 using UniversityApp.Models;
+using System.Collections.Generic;
 
 namespace UniversityApp.BL
 {
@@ -25,43 +26,43 @@ namespace UniversityApp.BL
             swappedStd.Group = studentManager.CopyValue(group);
             return swappedStd;
         }
-        public static Student[] SwapWithTeacher(Student[] students, Teacher teacher)
+        public static List<Student> SwapWithTeacher(List<Student> students, Teacher teacher)
         {
             StudentManager studentManager = new StudentManager();
             TeacherManager teacherManager = new TeacherManager();
-            Student[] swappedStds = new Student[students.Length];
-            for (int i = 0; i < swappedStds.Length; i++)
+            List<Student> swappedStds = new List<Student>(students.Count);
+            for (int i = 0; i < students.Count; i++)
             {
-                swappedStds[i] = studentManager.CopyValue(students[i]);
+                swappedStds.Add(studentManager.CopyValue(students[i]));
                 swappedStds[i].Teacher = teacherManager.CopyValue(teacher);
                 swappedStds[i].Group = studentManager.CopyValue(students[i].Group);
             }
             return swappedStds;
         }
-        public static Student[] SwapWithGroup(Student[] students, Group group)
+        public static List<Student> SwapWithGroup(List<Student> students, Group group)
         {
             StudentManager studentManager = new StudentManager();
             TeacherManager teacherManager = new TeacherManager();
-            Student[] swappedStds = new Student[students.Length];
-            for (int i = 0; i < swappedStds.Length; i++)
+            List<Student> swappedStds = new List<Student>(students.Count);
+            for (int i = 0; i < students.Count; i++)
             {
-                swappedStds[i] = studentManager.CopyValue(students[i]);
-                swappedStds[i].Teacher = teacherManager.CopyValue(students[i].Teacher);
+                swappedStds.Add(studentManager.CopyValue(students[i]));
+                swappedStds[i].Teacher = (Teacher)teacherManager.CopyValue(students[i].Teacher);
                 swappedStds[i].Group = studentManager.CopyValue(group);
             }
             return swappedStds;
         }
-        public static Teacher SwapWithStudents(Teacher teacher, Student[] students)
+        public static Teacher SwapWithStudents(Teacher teacher, List<Student> students)
         {
             StudentManager studentManager = new StudentManager();
             TeacherManager teacherManager = new TeacherManager();
             Teacher swappedTch = new Teacher();
-            swappedTch = teacherManager.CopyValue(teacher);
+            swappedTch = (Teacher)teacherManager.CopyValue(teacher);
             swappedTch.Group = studentManager.CopyValue(teacher.Group);
-            swappedTch.Students = new Student[students.Length];
-            for (int i = 0; i < swappedTch.Students.Length; i++)
+            swappedTch.Students = new List<Student>(students.Count);
+            for (int i = 0; i < swappedTch.Students.Count; i++)
             {
-                swappedTch.Students[i] = studentManager.CopyValue(students[i]);
+                swappedTch.Students[i] = (Student)studentManager.CopyValue(students[i]);
             }
             return swappedTch;
         }
@@ -72,53 +73,54 @@ namespace UniversityApp.BL
             Teacher swappedTch = new Teacher();
             swappedTch = teacherManager.CopyValue(teacher);
             swappedTch.Group = studentManager.CopyValue(group);
-            for (int i = 0; i < teacher.Students.Length; i++)
+            for (int i = 0; i < teacher.Students.Count; i++)
             {
                 swappedTch.Students[i] = studentManager.CopyValue(teacher.Students[i]);
             }
 
             return swappedTch;
         }
-        public static Teacher[] SwapWithStudents(Teacher[] teachers, Student[] students)
+        public static List<Teacher> SwapWithStudents(List<Teacher> teachers, List<Student> students)
         {
             StudentManager studentManager = new StudentManager();
             TeacherManager teacherManager = new TeacherManager();
-            Teacher[] swappedTchs = new Teacher[teachers.Length];
-            int minStCount = students.Length / teachers.Length;
-            for (int i = 0; i < teachers.Length - 1; i++)
+            List<Teacher> swappedTchs = new List<Teacher>(teachers.Count);
+            int minStCount = students.Count / teachers.Count;
+            for (int i = 0; i < teachers.Count - 1; i++)
             {
-                swappedTchs[i] = teacherManager.CopyValue(teachers[i]);
+                swappedTchs.Add(teacherManager.CopyValue(teachers[i]));
                 swappedTchs[i].Group = studentManager.CopyValue(teachers[i].Group);
-                swappedTchs[i].Students = new Student[minStCount];
                 for (int j = 0; j < minStCount; j++)
                 {
-                    swappedTchs[i].Students[j] = studentManager.CopyValue(students[i * minStCount + j]);
+                    swappedTchs[i].Students = new List<Student>();
+                    swappedTchs[i].Students.Add(studentManager.CopyValue(students[i * minStCount + j]));
                 }
             }
-            int lastStCount = minStCount * (teachers.Length - 1);
-            swappedTchs[teachers.Length - 1] = teacherManager.CopyValue(teachers[lastStCount]);
-            swappedTchs[teachers.Length - 1].Group = studentManager.CopyValue(teachers[lastStCount].Group);
-            swappedTchs[teachers.Length - 1].Students = new Student[students.Length - lastStCount];
+            int lastStCount = minStCount * (teachers.Count - 1);
+            swappedTchs.Add(teacherManager.CopyValue(teachers[lastStCount]));
+            swappedTchs[teachers.Count - 1].Group = studentManager.CopyValue(teachers[lastStCount].Group);
+            swappedTchs[teachers.Count - 1].Students = new List<Student>(students.Count - lastStCount);
             int counter = 0;
-            for (int i = lastStCount; i < students.Length; i++)
+            for (int i = lastStCount; i < students.Count; i++)
             {
-                swappedTchs[teachers.Length - 1].Students[counter++] = studentManager.CopyValue(students[i]);
+                swappedTchs[teachers.Count - 1].Students = new List<Student>();
+                swappedTchs[teachers.Count - 1].Students.Add(studentManager.CopyValue(students[i]));
             }
             return swappedTchs;
         }
-        public static Teacher[] SwapWithGroups(Teacher[] teachers, Group group)
+        public static List<Teacher> SwapWithGroups(List<Teacher> teachers, Group group)
         {
             StudentManager studentManager = new StudentManager();
             TeacherManager teacherManager = new TeacherManager();
-            Teacher[] swappedTchs = new Teacher[teachers.Length];
+            List<Teacher> swappedTchs = new List<Teacher>(teachers.Count);
 
-            for (int i = 0; i < swappedTchs.Length; i++)
+            for (int i = 0; i < teachers.Count; i++)
             {
-                swappedTchs[i] = teacherManager.CopyValue(teachers[i]);
+                swappedTchs.Add(teacherManager.CopyValue(teachers[i]));
                 swappedTchs[i].Group = studentManager.CopyValue(group);
-                for (int j = 0; j < teachers[i].Students.Length; j++)
+                for (int j = 0; j < teachers[i].Students.Count; j++)
                 {
-                    swappedTchs[i].Students[j] = studentManager.CopyValue(teachers[i].Students[j]);
+                    swappedTchs[i].Students.Add(studentManager.CopyValue(teachers[i].Students[j]));
                 }
             }
             return swappedTchs;

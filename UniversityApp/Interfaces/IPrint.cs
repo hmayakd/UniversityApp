@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UniversityApp.Models;
 
 namespace UniversityApp.Interfaces
@@ -6,6 +7,6 @@ namespace UniversityApp.Interfaces
     public interface IPrint
     {
         void Print(Person person);
-        void Print(Person[] persons);
+        void Print(List<Person> persons);
     }
 }
